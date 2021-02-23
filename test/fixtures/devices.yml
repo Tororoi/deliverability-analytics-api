@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  phone_number: MyText
+  carrier: MyText
+  disabled_at: 2021-02-23 11:33:53
+
+two:
+  phone_number: MyText
+  carrier: MyText
+  disabled_at: 2021-02-23 11:33:53
