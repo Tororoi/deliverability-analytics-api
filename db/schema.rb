@@ -12,7 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2021_02_23_163445) do
 
-  create_table "devices", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
+  enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
+
+  create_table "devices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "phone_number"
     t.text "carrier"
     t.datetime "disabled_at", precision: 6
@@ -20,16 +25,16 @@ ActiveRecord::Schema.define(version: 2021_02_23_163445) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "heartbeats", force: :cascade do |t|
+  create_table "heartbeats", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
-    t.integer "device_id", null: false
+    t.uuid "device_id", null: false
     t.index ["device_id"], name: "index_heartbeats_on_device_id"
   end
 
-  create_table "reports", force: :cascade do |t|
+  create_table "reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "sender"
     t.text "message"
-    t.integer "device_id", null: false
+    t.uuid "device_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["device_id"], name: "index_reports_on_device_id"
