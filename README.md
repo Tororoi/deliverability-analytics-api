@@ -3,10 +3,10 @@
 ### Database
 
 Development:
->-`bundle install`  
->-`rake db:create`  
->-`rake db:migrate`  
->-`rails s`  
+>`bundle install`  
+>`rake db:create`  
+>`rake db:migrate`  
+>`rails s`  
 
 Testing
 >`bundle install`  
