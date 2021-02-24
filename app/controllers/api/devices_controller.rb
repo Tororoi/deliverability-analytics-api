@@ -7,7 +7,7 @@ class Api::DevicesController < ApplicationController
             @device.save
             render json: { device: @device }, status: :created
         else
-            render json: { error: "Device information was invalid" }, status: 500
+            render json: { error: @device.errors.full_messages }, status: 500
         end
     end
 
@@ -28,8 +28,17 @@ class Api::DevicesController < ApplicationController
 
     def report
         # Create a new report associated with device
-        @device = Device.find(params[:id])
-        @report = @device.reports.create()
+        if Device.exists?(report_params[:device_id])
+            @device = Device.find(report_params[:device_id])
+            if @device.disabled_at != nil 
+                render json: { error: "Device is disabled" }, status: 500
+            else
+                @report = @device.reports.create(report_params)
+                render json: { device: @report }, status: :created
+            end
+        else
+            render json: { error: "Device ID does not exist" }, status: 500
+        end
     end
 
     def terminate
@@ -55,6 +64,6 @@ class Api::DevicesController < ApplicationController
     end
 
     def report_params
-        params.require(:device).permit(:message, :sender)
+        params.permit(:device_id, :message, :sender)
     end
 end
