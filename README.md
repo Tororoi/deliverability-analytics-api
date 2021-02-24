@@ -2,7 +2,9 @@
 
 ### Database
 
-Development:
+After cloning the repo run the following commands to set up the database:
+
+Development
 >`bundle install`  
 >`rake db:create`  
 >`rake db:migrate`  
