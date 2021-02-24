@@ -47,3 +47,6 @@ end
 
 # Phonelib
 gem 'phonelib'
+
+# Controller testing
+gem 'rails-controller-testing'
