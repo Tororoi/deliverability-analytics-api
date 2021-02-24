@@ -1,3 +1,7 @@
 class Device < ApplicationRecord
-    has_many :heartbeats, :reports
+    # validates :phone_number, format: {}
+    validates :carrier, presence: true
+
+    has_many :heartbeats
+    has_many :reports
 end

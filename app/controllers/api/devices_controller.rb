@@ -2,7 +2,13 @@ class Api::DevicesController < ApplicationController
 
     def register
         # Create a new device in the database
-        @device = Device.create(device_params)
+        @device = Device.new(device_params)
+        if @device.valid?
+            @device.save
+            render json: { device: @device }, status: :created
+        else
+            render json: { error: "Device information was invalid" }, status: 500
+        end
     end
 
     def alive
