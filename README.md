@@ -1,20 +1,21 @@
-# README
+README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Ruby version: 2.5.8
 
-Things you may want to cover:
+# Database
 
-* Ruby version
+Development:
+`bundle install`
+`rake db:create`
+`rake db:migrate`
+`rails s`
 
-* System dependencies
+Testing
+`bundle install`
+`rake db:create`
+`RAILS_ENV=test rake db:migrate`
+`rspec`
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-    - Run `rspec -fd`
+Get full descriptions of tests
+`rspec -fd`
 
