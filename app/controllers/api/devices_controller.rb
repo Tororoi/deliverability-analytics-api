@@ -13,8 +13,17 @@ class Api::DevicesController < ApplicationController
 
     def alive
         # Create a new heartbeat associated with device
-        @device = Device.find(params[:id])
-        @heartbeat = @device.heartbeats.create()
+        if Device.exists?(params[:id])
+            @device = Device.find(params[:id])
+            if @device.disabled_at != nil 
+                render json: { error: "Device is disabled" }, status: 500
+            else
+                @heartbeat = @device.heartbeats.create()
+                render json: { device: @device }, status: :created
+            end
+        else
+            render json: { error: "Device ID does not exist" }, status: 500
+        end
     end
 
     def report
@@ -25,8 +34,18 @@ class Api::DevicesController < ApplicationController
 
     def terminate
         # Update device as disabled with timestamp
-        @device = Device.find(params[:id])
         # assign current datetime to @device[:disabled_at]
+        if Device.exists?(params[:id])
+            @device = Device.find(params[:id])
+            if @device.disabled_at != nil 
+                render json: { error: "Device is already disabled" }, status: 500
+            else
+                @device.update(disabled_at: DateTime.now)
+                render json: { device: @device }, status: :ok
+            end
+        else
+            render json: { error: "Device ID does not exist" }, status: 500
+        end
     end
 
     private
